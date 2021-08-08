@@ -1,0 +1,244 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+
+  <span>  <mat-icon><span class="material-icons-outlined">
+      engineering
+      </span></mat-icon>Upgrade maintenance</span>
+  <div class="spacer"></div>
+
+  <a mat-button routerLink="/loginsuccess"><mat-icon>home</mat-icon>Accueil</a>
+
+  <a mat-button routerLink="/rh"><mat-icon>group</mat-icon>Ressource humaine</a>
+
+  <a mat-button routerLink="/achat"><mat-icon>precision_manufacturing</mat-icon>Stock</a>
+
+  <a mat-button  routerLink="/vente"><mat-icon>person</mat-icon>Les clients</a>
+
+  <a mat-button routerLink="/fournisseur"><mat-icon>work_outline</mat-icon>Fournisseurs</a>
+
+
+  <a mat-button routerLink="/service"><mat-icon>miscellaneous_services</mat-icon>Services</a>
+
+  <a mat-button routerLink="/commande"><mat-icon>miscellaneous_services</mat-icon>Les Commandes</a>
+
+  <a mat-raised-button color="warn" routerLink=""><mat-icon>logout</mat-icon>Se deconnecter</a>
+
+  </mat-toolbar>
+  <div class="body">
+  <div class="serch"><br><br><br>
+    <form class="form-inline my-2 my-lg-0">
+      <input type="search" (ngModelChange)="searchAchats(key.value)" #key="ngModel" ngModel
+       name="key" id="searchName" class="form-control mr-sm-2" placeholder="Trouver une pièce..." required>
+       <button class="btn btn-primary">Chercher</button>
+      </form>
+  </div>
+  <br><br>
+  <div class="two">
+    <h1>Gestion de stock
+      <span>La liste des produits</span>
+    </h1>
+  </div>
+
+  <br><br><br>
+  <div class="left">
+    <a class="btn btn-success" (click)="OpenModal(null!, 'add')"> <mat-icon>add</mat-icon> Ajouter une pièce</a>
+  </div>
+<br><br>
+<div class="tbl-header" class="container" id="main">
+<br><br>
+    <table class="styled-table">
+
+        <tr class="rowclass">
+          <th>Référence de la pièce</th>
+          <th>Image</th>
+          <th>Nom de la pièce</th>
+          <th>Description de la pièce</th>
+          <th>Prix de la pièce</th>
+          <th>Manupilation</th>
+        </tr>
+    <tbody *ngFor="let achat of achats">
+        <tr>
+          <td>{{achat?.ref}}</td>
+          <td><img  class="image" src="{{achat?.imageURL}}" />
+          </td>
+          <td>{{achat?.name}}</td>
+          <td>{{achat?.info}}</td>
+          <td>{{achat?.price}}</td>
+          <td>
+
+            <button type="button" (click)="OpenModal(achat, 'edit')" class="btn btn-primary">Modifier</button>&nbsp;&nbsp;
+            <br><br><button type="button" (click)="OpenModal(achat, 'delete')"  class="btn btn-danger">Supprimer</button>
+            <!-- <button type="button" (click)="download()"  class="btn btn-danger">down</button> -->
+
+
+          </td>
+
+        </tr>
+
+      </tbody>
+    </table>
+    <!-- <br><br> <button type="button" class="btn btn-info">Ajouter une pièce</button>&nbsp;&nbsp; -->
+
+  </div>
+
+<div class="modal fade" id="addAchatModal" tabindex="-1" role="dialog" aria-labelledby="addAchatModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addAchatModalLabel">Ajouter une pièce</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddAchat(addForm)">
+          <div class="form-group">
+             <label for="name">Nom de la pièces :</label>
+             <input type="text" ngModel name="name" class="form-control" id="nom" placeholder="Le nom" required>
+          </div>
+          <div class="form-group">
+             <label for="email">Description de la pièce :</label>
+             <input type="text" ngModel name="info" class="form-control" id="email" placeholder="Information" required>
+          </div>
+
+          <div class="form-group">
+             <label for="phone">Prix de la pièce : </label>
+             <input type="text" ngModel name="price" class="form-control" id="phone" placeholder="Prix" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">L'image : </label>
+            <input type="text" ngModel name="imageURL" class="form-control" id="phone" placeholder="Image" required>
+         </div>
+
+          <div class="modal-footer">
+             <button type="button" id="add-achat-form" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+             <button id="add-achat-form" [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Sauvegarder</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+<!-- =========================================-------------------------------------------=========================================------------------------------------------- -->
+
+
+<div class="modal fade" id="updateAchatModal" tabindex="-1" role="dialog" aria-labelledby="achatEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="updateAchatModalLabel">Modification de la pièce {{editAchat?.name}}</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <form #editForm="ngForm">
+              <div class="form-group">
+                 <label for="name">Nom de la pièces :</label>
+                 <input type="text" ngModel="{{editAchat?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Le nom ">
+              </div>
+              <input type="hidden" ngModel="{{editAchat?.ref}}" name="ref" class="form-control" id="id" placeholder="Reference">
+              <div class="form-group">
+                 <label for="email">Description de la pièce :</label>
+                 <input type="text" ngModel="{{editAchat?.info}}" name="info" class="form-control" id="info" placeholder="Information">
+              </div>
+              <div class="form-group">
+                 <label for="phone">Le prix:</label>
+                 <input type="text" ngModel="{{editAchat?.price}}" name="price" class="form-control" id="prix" placeholder="prix">
+              </div>
+
+              <div class="form-group">
+                <label for="phone">L'image:</label>
+                <input type="text" ngModel="{{editAchat?.imageURL}}" name="imageURL" class="form-control" id="prix" placeholder="Image">
+             </div>
+
+
+              <div class="modal-footer">
+                 <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Ferme</button>
+                 <button (click)="UpdateAchat(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Sauvegarders</button>
+              </div>
+           </form>
+        </div>
+     </div>
+  </div>
+</div>
+
+<!-- =========================================------------------------------------------- -->
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="deleteModelLabel">Suppression d'une pièce</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <p>Êtes-vous sûr de vouloir supprimer cette pièce : {{deleteAchat?.name}}?</p>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+             <button (click)="DeleteAchat(deleteAchat!.ref)" class="btn btn-danger" data-dismiss="modal">Oui</button>
+          </div>
+       </div>
+    </div>
+ </div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+  <!-- Section: Social media -->
+  <section
+    class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+  >
+
+
+    <!-- Right -->
+  </section>
+
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+
+        <!-- Grid column --
+
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+
+
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Contact
+          </h6>
+          <p><i class="fas fa-home me-3"></i> 265 Bd Emile Zola 20300 Casablanca
+          </p>
+
+          <p><i class="fas fa-phone me-3"></i> Tél :(212)522 480 746/ 522 245 489</p>
+
+          <p><i class="fas fa-phone me-3"></i>Mobile (212)661 189 562 /661 623 992</p>
+
+          <p><i class="fas fa-phone me-3"></i> Fax :(212)522 490 772/ 522 245 490</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="">UPGARDE MAINTENANCE</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+

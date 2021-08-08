@@ -1,0 +1,36 @@
+<head>
+
+</head>
+<mat-toolbar color="primary" class="mat-elevation-z6">
+
+  <span> <img class="logo" src="https://drive.google.com/file/d/1tIuyKMxkXVF4kCJUVzm49spJl9DRu2fm/view?usp=sharing" alt=""> </span>
+  <div class="spacer"></div>
+
+  <a mat-button routerLink="/homeclient"><mat-icon>home</mat-icon>Accueil</a>
+
+  <a mat-button routerLink="/eshop"><mat-icon>group</mat-icon>shop</a>
+  </mat-toolbar>
+<br><br><br>
+  <div class="two">
+    <h1>Les produits disponibles
+      <span> </span>
+    </h1>
+  </div>
+<div class="items">
+  <div class="row">
+    <div class="column"  *ngFor="let achat of achats">
+      <div class="card">
+        <img class="image" src="{{achat.imageURL}}" />
+        <h2 class="titre">{{achat.name}}</h2>
+       <p>{{achat.info}}</p>
+       <h3>{{achat.price}}</h3>
+       <button   class="btn btn-success">Ajouter au panier</button><br>
+      <button routerLink="/viewproduct" class="btn btn-info">Voir</button>
+
+      </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,49 @@
+.navbar-default {
+  background: #20226d;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  margin:0; }
+
+.navbar-header {
+  z-index: 99;
+  position: relative; }
+
+.navbar-brand {
+  height: auto;
+  transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  padding: 32px 15px;
+  z-index: 99999; }
+
+.navbar-nav {
+  transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  margin-top: 45px;
+  -o-transition: all 0.2s ease-in-out; }
+  .navbar-nav > li > a {
+    color: #ffff !important;
+    font-size: 15px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    padding: 36px 15px 32px; }
+  .navbar-nav > li > a:hover,
+  .navbar-nav > li > a.active {
+    color: #080808 !important; }
+  .navbar-nav li.drop {
+    position: relative; }
+  .navbar-nav li:hover ul.drop-down {
+    opacity: 1;
+    visibility: visible; }
+  .navbar-nav li.search {
+    position: inherit; }

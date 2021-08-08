@@ -1,0 +1,10 @@
+.spacer {
+  flex: 1 1 auto;
+}
+.mat-toolbar.mat-primary {
+  background: #20226d;
+  color: #fff;
+}
+.page-footer{
+  margin-top: 45%;
+}

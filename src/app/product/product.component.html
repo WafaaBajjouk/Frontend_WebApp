@@ -1,0 +1,85 @@
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<mat-toolbar color="primary" class="mat-elevation-z6">
+
+  <span><mat-icon>trending_up</mat-icon>UPGRADESHOP</span>
+  <div class="spacer"></div>
+
+  <a mat-button routerLink="/homeclient">
+    <mat-icon>home</mat-icon>
+    Accueil</a>
+
+  <a mat-button routerLink="/product">
+    <mat-icon>storefront</mat-icon>
+    Boutique</a>
+
+  <!-- <a mat-button routerLink="/valider">
+    <mat-icon>point_of_sale</mat-icon>Valider mon panier
+    </a> -->
+    <a mat-button routerLink="/contact">
+      <mat-icon>support_agent</mat-icon>
+      Contactez nous</a>
+  </mat-toolbar><br>
+  <br><br>
+    <div class="two">
+      <h1>Les produits disponibles
+        <span> </span>
+      </h1>
+    </div>
+   <div class="contenu">
+      <div class="col-md-10 custom-products-cart-container">
+          <div class="offset-md-8">
+              <ul class="nav navbar-nav navbar-right">
+
+                  <li class="dropdown">
+                      <a href="#" class="btn btn-info btn-lg" data-toggle="dropdown" role="button" aria-expanded="false">
+                          <span class="fa fa-shopping-cart">
+                            Produits ajoutés au panier
+                                                    </span>
+                          <span class="caret">{{cartProducts.length}}</span>
+                      </a>
+                      <ul class="dropdown-menu" >
+                          <li *ngFor="let item of cartProducts">
+                              <div class="item product-cart-item row">
+                                  <div class="col-lg-8" *ngIf="item">{{item.name}}</div>
+                                  <div class="col-lg-8" *ngIf="item"><strong>${{item.price}}</strong></div>
+
+                         <hr>
+                        <li><a class="btn btn-small btn-success" role="button" (click)="makePayment(item.price)">Valider</a></li>
+                         </div>  </li> <br>
+                          <li *ngIf="cartProducts.length > 0">
+                              <a class="btn btn-small btn-warning" role="button" (click)="emptyCart()">Vider le panier</a></li>
+
+
+
+                              </ul>
+                  </li>
+              </ul>
+
+          </div>
+      </div>
+
+
+
+  <hr>
+  <hr>
+  <div class="items">
+    <div class="row">
+      <div class="column"  *ngFor="let achat of achats">
+        <div class="card">
+          <img class="image" src="{{achat.imageURL}}" />
+          <h2 class="titre">{{achat.name}}</h2>
+         <p>{{achat.info}}</p>
+         <h3>{{achat.price}}</h3>
+         <button   class="btn btn-success" (click)="addToCart(achat.ref)"><mat-icon>add_shopping_cart</mat-icon>Ajouter au panier</button><br>
+        <!-- <button routerLink="/viewproduct" class="btn btn-info">Voir</button> -->
+
+        </div>
+      </div>
+  </div>
+
+
+
+
+
+

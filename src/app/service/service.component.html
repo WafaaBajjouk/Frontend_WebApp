@@ -1,0 +1,262 @@
+
+<mat-toolbar color="primary" class="mat-elevation-z6">
+
+  <span>  <mat-icon><span class="material-icons-outlined">
+      engineering
+      </span></mat-icon>Upgrade maintenance</span>
+  <div class="spacer"></div>
+
+  <a mat-button routerLink="/loginsuccess"><mat-icon>home</mat-icon>Accueil</a>
+
+  <a mat-button routerLink="/rh"><mat-icon>group</mat-icon>Ressource humaine</a>
+
+  <a mat-button routerLink="/achat"><mat-icon>precision_manufacturing</mat-icon>Stock</a>
+
+  <a mat-button  routerLink="/vente"><mat-icon>person</mat-icon>Les clients</a>
+
+  <a mat-button routerLink="/fournisseur"><mat-icon>work_outline</mat-icon>Fournisseurs</a>
+
+
+  <a mat-button routerLink="/service"><mat-icon>miscellaneous_services</mat-icon>Services</a>
+
+  <a mat-button routerLink="/commande"><mat-icon>miscellaneous_services</mat-icon>Les Commandes</a>
+
+  <a mat-raised-button color="warn" routerLink=""><mat-icon>logout</mat-icon>Se deconnecter</a>
+
+  </mat-toolbar>
+  <div class="body">
+    <div class="serch"><br><br><br>
+      <form class="form-inline my-2 my-lg-0">
+        <input type="search" (ngModelChange)="searchServices(key.value)" #key="ngModel" ngModel
+         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Trouver un service..." required>
+         <button class="btn btn-primary">Chercher</button>
+        </form>
+    </div>
+
+  <br><br>
+  <div class="two">
+    <h1>Gestion des services
+      <span>La liste des services</span>
+    </h1>
+  </div>
+
+  <!-- <br><br> -->
+  <br><br>
+  <div class="left">
+    <a class="btn btn-success" (click)="OpenModal(null!, 'add')"> <mat-icon>add</mat-icon> Ajouter un service</a>
+  </div>
+
+
+  <br><br>
+  <br><br>
+  <br><br>
+
+
+
+  <div class="container" id="main">
+
+    <table class="styled-table" >
+    <tr>
+      <th>Le numéro ID du service</th>
+      <th>Nom de la société</th>
+      <th>Le titre</th>
+      <th>Description du service</th>
+      <th>Le nom du responsable</th>
+      <th>Le prix</th>
+      <th>Manupilation</th>
+    </tr>
+      <tbody *ngFor="let service of services">
+
+        <tr>
+          <td>{{service?.id}}</td>
+          <td>{{service?.nomclient}}</td>
+          <td>{{service?.titre}}</td>
+          <td>{{service?.info}}</td>
+          <td>{{service?.nomresponsable}}</td>
+          <td>{{service?.price}}</td>
+
+          <td>
+            <button type="button" (click)="OpenModal(service, 'edit')" class="btn btn-primary">Modifier</button>&nbsp;&nbsp;
+            <br><br><button type="button" (click)="OpenModal(service, 'delete')"  class="btn btn-danger">Supprimer</button>
+          </td>
+
+        </tr>
+      </tbody>
+  </table>
+  </div>
+
+
+  <!-- =========================================-------------------------------------------=========================================------------------------------------------- -->
+
+  <div class="modal fade" id="addServiceModal" tabindex="-1" role="dialog" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="addServiceModalLabel">Ajouter un service</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form #addForm="ngForm" (ngSubmit)="onAddService(addForm)">
+            <div class="form-group">
+               <label for="name">Le nom de la société du client :</label>
+               <input type="text" ngModel name="nomclient" class="form-control" id="nom" placeholder="Le nom du client" required>
+            </div>
+            <div class="form-group">
+               <label for="email">Le service :</label>
+               <input type="email" ngModel name="titre" class="form-control" id="email" placeholder="Service" required>
+            </div>
+
+            <div class="form-group">
+               <label for="phone">Le nom du responsable :</label>
+               <input type="text" ngModel name="nomresponsable" class="form-control" id="phone" placeholder="Le nom du responsable" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Description du service :</label>
+              <input type="text" ngModel name="info" class="form-control" id="ville" placeholder="Description du service" required>
+           </div>
+
+           <div class="form-group">
+            <label for="phone">Le prix :</label>
+            <input type="text" ngModel name="price" class="form-control" id="ville" placeholder="Prix" required>
+         </div>
+
+            <div class="modal-footer">
+               <button type="button" id="add-service-form" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+               <button id="add-service-form" [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Sauvegarder</button>
+            </div>
+            </form>
+         </div>
+      </div>
+    </div>
+    </div>
+  <!-- =========================================-------------------------------------------=========================================------------------------------------------- -->
+
+
+  <div class="modal fade" id="updateServiceModal" tabindex="-1" role="dialog" aria-labelledby="serviceEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+       <div class="modal-content">
+          <div class="modal-header">
+             <h5 class="modal-title" id="updateServiceModalLabel">Modidfer le service {{editService?.id}}</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+             </button>
+          </div>
+          <div class="modal-body">
+             <form #editForm="ngForm">
+                <div class="form-group">
+                  <div class="form-group">
+                    <label for="name">Le nom de la société du client :</label>
+                    <input type="text" ngModel="{{editService?.nomclient}}" name="nomclient" class="form-control" id="nom" placeholder="Le nom du client" required>
+                 </div>
+                 <div class="form-group">
+                    <label for="email">Le service :</label>
+                    <input type="email" ngModel="{{editService?.titre}}" name="titre" class="form-control" id="email" placeholder="Service" required>
+                 </div>
+
+                 <div class="form-group">
+                    <label for="phone">Le nom du responsable :</label>
+                    <input type="text" ngModel="{{editService?.nomresponsable}}  "name="nomresponsable" class="form-control" id="phone" placeholder="Le nom du responsable" required>
+                 </div>
+                 <div class="form-group">
+                   <label for="phone">Description du service :</label>
+                   <input type="text" ngModel="{{editService?.info}}" name="info" class="form-control" id="ville" placeholder="Description du service" required>
+                </div>
+
+                <div class="form-group">
+                 <label for="phone">Le prix :</label>
+                 <input type="text" ngModel="{{editService?.price}}" name="price" class="form-control" id="ville" placeholder="Prix" required>
+              </div>
+
+
+
+                <div class="modal-footer">
+                   <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Fermer</button>
+                   <button (click)="UpdateService(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Sauvegarder</button>
+                </div>
+                </div>
+             </form>
+          </div>
+       </div>
+    </div>
+  </div>
+
+  <!-- =========================================------------------------------------------- -->
+
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="deleteModelLabel">Suppression du service</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <p>Êtes-vous sûr de vouloir supprimer le service : {{deleteService?.id}}?</p>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+               <button (click)="DeleteService(deleteService!.id)" class="btn btn-danger" data-dismiss="modal">Oui</button>
+            </div>
+         </div>
+      </div>
+   </div>
+  </div>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+  <!-- Section: Social media -->
+  <section
+    class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+  >
+
+
+    <!-- Right -->
+  </section>
+
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+
+        <!-- Grid column --
+
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+
+
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Contact
+          </h6>
+          <p><i class="fas fa-home me-3"></i> 265 Bd Emile Zola 20300 Casablanca
+          </p>
+
+          <p><i class="fas fa-phone me-3"></i> Tél :(212)522 480 746/ 522 245 489</p>
+
+          <p><i class="fas fa-phone me-3"></i>Mobile (212)661 189 562 /661 623 992</p>
+
+          <p><i class="fas fa-phone me-3"></i> Fax :(212)522 490 772/ 522 245 490</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="">UPGARDE MAINTENANCE</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->

@@ -1,0 +1,40 @@
+<div class="container" id=slow>
+  <h2>Upgrade Maintenance</h2>
+  <!--L'attribut  #loginForm  est ce qu'on appelle une référence locale.  Vous donnez simplement un nom à l'objet sur lequel vous ajoutez cet attribut ; ce nom sera ensuite utilisable par Angular.  C'est d'ailleurs le cas ici : on appelle le formulaire  loginform pour ensuite le passer comme argument à la méthode de soumission -->
+  <!-- De manière générale, on ne donne pas de valeur à une référence locale : on écrit simplement  #f  ou  #my-name . Dans ce cas précis d'un formulaire en méthode template, on y attribue la valeur  ngForm  pour avoir accès à l'objet créé par Angular. -->
+  <form  #loginform="ngForm" >
+    <!-- <small class="text-danger">{{msg}}</small>  -->
+    <!-- <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" [(ngModel)]="username" required #email="ngModel"
+
+      >
+      <small class="text-danger" >Email Id is required field
+
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="pwd">Mot de passe:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd" [(ngModel)]="password"  #password="ngModel" required
+
+      >
+
+   </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="remember">Garder ma session active</label>
+    </div> -->
+    <!-- <button type="submit" (click)=checkLogin()  class="btn btn-info">Connexion</button> -->
+
+    <div class="form-group">
+          <div>
+            Nom :
+            <input type="email" class="form-control" id="email" placeholder="Nom" name="email" [(ngModel)]="username" required #email="ngModel">            Le mot de passe : <input type="password" class="form-control" name="Mot de passe" [(ngModel)]="password">
+          </div><br>
+          <button  routerLink="/loginsuccess"  class="btn btn-success">
+            Login
+          </button>
+        </div>
+        <!-- </div> -->
+        <!-- </div> -->
+  </form>
+</div>

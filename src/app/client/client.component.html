@@ -1,0 +1,245 @@
+
+<mat-toolbar color="primary" class="mat-elevation-z6">
+
+  <span>  <mat-icon><span class="material-icons-outlined">
+      engineering
+      </span></mat-icon>Upgrade maintenance</span>
+  <div class="spacer"></div>
+
+  <a mat-button routerLink="/loginsuccess"><mat-icon>home</mat-icon>Accueil</a>
+
+  <a mat-button routerLink="/rh"><mat-icon>group</mat-icon>Ressource humaine</a>
+
+  <a mat-button routerLink="/achat"><mat-icon>precision_manufacturing</mat-icon>Stock</a>
+
+  <a mat-button  routerLink="/vente"><mat-icon>person</mat-icon>Les clients</a>
+
+  <a mat-button routerLink="/fournisseur"><mat-icon>work_outline</mat-icon>Fournisseurs</a>
+
+
+  <a mat-button routerLink="/service"><mat-icon>miscellaneous_services</mat-icon>Services</a>
+
+  <a mat-button routerLink="/commande"><mat-icon>miscellaneous_services</mat-icon>Les Commandes</a>
+
+  <a mat-raised-button color="warn" routerLink=""><mat-icon>logout</mat-icon>Se deconnecter</a>
+
+  </mat-toolbar>
+  <div class="body">
+    <div class="serch"><br><br><br>
+      <form class="form-inline my-2 my-lg-0">
+        <input type="search" (ngModelChange)="searchClients(key.value)" #key="ngModel" ngModel
+         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Trouver un client..." required>
+         <button class="btn btn-primary">Chercher</button>
+        </form>
+    </div>
+
+<br><br>
+<div class="two">
+  <h1>Gestion des clients
+    <span>La liste des clients</span>
+  </h1>
+</div>
+
+<!-- <br><br> -->
+<br><br>
+<div class="left">
+  <a class="btn btn-success" (click)="OpenModal(null!, 'add')"> <mat-icon>add</mat-icon> Ajouter un client</a>
+</div>
+
+
+<br><br>
+<br><br>
+<br><br>
+
+
+
+<div class="container" id="main">
+
+<table class="styled-table" >
+<tr>
+  <th>Le numéro ID</th>
+  <th>Nom </th>
+  <th>L'address email</th>
+  <th>Ville</th>
+  <th>Numéro de téléphone</th>
+  <th>Manupilation</th>
+</tr>
+  <tbody *ngFor="let client of clients">
+
+    <tr>
+      <td>{{client?.id}}</td>
+      <td>{{client?.name}}</td>
+      <td>{{client?.email}}</td>
+      <td>{{client?.ville}}</td>
+      <td>{{client?.phone}}</td>
+      <td>
+        <button type="button" (click)="OpenModal(client, 'edit')" class="btn btn-primary">Modifier</button>&nbsp;&nbsp;
+        <br><br><button type="button" (click)="OpenModal(client, 'delete')"  class="btn btn-danger">Supprimer</button>
+      </td>
+
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- =========================================-------------------------------------------=========================================------------------------------------------- -->
+
+<div class="modal fade" id="addClientModal" tabindex="-1" role="dialog" aria-labelledby="addClientrModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="addClientrModalLabel">Ajoute un client</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <form #addForm="ngForm" (ngSubmit)="onAddClient(addForm)">
+          <div class="form-group">
+             <label for="name">Le nom du client :</label>
+             <input type="text" ngModel name="name" class="form-control" id="nom" placeholder="Le nom" required>
+          </div>
+          <div class="form-group">
+             <label for="email">L'address Email du client :</label>
+             <input type="email" ngModel name="email" class="form-control" id="email" placeholder="Email" required>
+          </div>
+
+          <div class="form-group">
+             <label for="phone">Numéro de téléphone du client :</label>
+             <input type="text" ngModel name="phone" class="form-control" id="phone" placeholder="Phone" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">La ville :</label>
+            <input type="text" ngModel name="ville" class="form-control" id="ville" placeholder="Ville" required>
+         </div>
+
+          <div class="modal-footer">
+             <button type="button" id="add-client-form" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+             <button id="add-client-form" [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Sauvegarder</button>
+          </div>
+          </form>
+       </div>
+    </div>
+  </div>
+  </div>
+<!-- =========================================-------------------------------------------=========================================------------------------------------------- -->
+
+<div class="modal fade" id="updateClientModal" tabindex="-1" role="dialog" aria-labelledby="clientEditModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+     <div class="modal-content">
+        <div class="modal-header">
+           <h5 class="modal-title" id="updateClientModalLabel">Modidfer le client {{editClient?.name}}</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+        </div>
+        <div class="modal-body">
+           <form #editForm="ngForm">
+              <div class="form-group">
+                 <label for="name">Le nom complet du client :</label>
+                 <input type="text" ngModel="{{editClient?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Le nom de societe">
+              </div>
+              <input type="hidden" ngModel="{{editClient?.id}}" name="id" class="form-control" id="id" placeholder="Email">
+              <div class="form-group">
+                 <label for="email">L'address Email :</label>
+                 <input type="email" ngModel="{{editClient?.email}}" name="email" class="form-control" id="email" placeholder="Email">
+              </div>
+              <div class="form-group">
+                 <label for="phone">La ville:</label>
+                 <input type="text" ngModel="{{editClient?.ville}}" name="ville" class="form-control" id="jobTitle" placeholder="Ville">
+              </div>
+              <div class="form-group">
+                 <label for="phone">Numéro de téléphone :</label>
+                 <input type="text" ngModel="{{editClient?.phone}}" name="phone" class="form-control" id="phone" name="phone" placeholder="téléphone">
+              </div>
+
+
+
+              <div class="modal-footer">
+                 <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Fermer</button>
+                 <button (click)="UpdateClient(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Sauvegarder</button>
+              </div>
+           </form>
+        </div>
+     </div>
+  </div>
+</div>
+
+<!-- =========================================------------------------------------------- -->
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+       <div class="modal-header">
+          <h5 class="modal-title" id="deleteModelLabel">Suppression du client</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+       </div>
+       <div class="modal-body">
+          <p>Êtes-vous sûr de vouloir supprimer le client : {{deleteClient?.name}}?</p>
+          <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+             <button (click)="DeleteClient(deleteClient!.id)" class="btn btn-danger" data-dismiss="modal">Oui</button>
+          </div>
+       </div>
+    </div>
+ </div>
+</div>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+  <!-- Section: Social media -->
+  <section
+    class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+  >
+
+
+    <!-- Right -->
+  </section>
+
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+
+        <!-- Grid column --
+
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+
+
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Contact
+          </h6>
+          <p><i class="fas fa-home me-3"></i> 265 Bd Emile Zola 20300 Casablanca
+          </p>
+
+          <p><i class="fas fa-phone me-3"></i> Tél :(212)522 480 746/ 522 245 489</p>
+
+          <p><i class="fas fa-phone me-3"></i>Mobile (212)661 189 562 /661 623 992</p>
+
+          <p><i class="fas fa-phone me-3"></i> Fax :(212)522 490 772/ 522 245 490</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="">UPGARDE MAINTENANCE</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->

@@ -1,0 +1,17 @@
+
+.container{
+  display: block;
+  align-items: center;
+  margin-top:250px;
+  max-width: 50%;
+  max-width: 50%;
+  border: 1px soli;
+  padding: 20px;
+  border-radius: 10px;
+
+}
+#slow{
+box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+transition: box-shadow 500ms;
+}
+
